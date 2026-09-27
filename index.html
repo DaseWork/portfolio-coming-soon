@@ -1,1283 +1,340 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#100F0D">
-<title>bymunoz — Design Prototype</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>David Munoz — Graphic Designer, Austin TX | Portfolio on Press</title>
+<meta name="description" content="David Munoz is an Austin-based graphic designer working across brand identity, print production, environmental design and illustration. New portfolio on press at bymunoz.com.">
+<link rel="canonical" href="https://bymunoz.com/">
+<meta name="theme-color" content="#F5F1E8">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bymunoz.com/">
+<meta property="og:title" content="David Munoz — Graphic Designer, Austin TX">
+<meta property="og:description" content="Brand identity, print production, environmental design and illustration. New portfolio on press.">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23100F0D'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23C8692A' stroke-width='2'/%3E%3Cpath d='M16 4v24M4 16h24' stroke='%23C8692A' stroke-width='2'/%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Fraunces:opsz,wght,SOFT@9..144,300..900,50&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "David Munoz",
+  "jobTitle": "Graphic Designer",
+  "url": "https://bymunoz.com/",
+  "email": "mailto:davidselecto@gmail.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Austin", "addressRegion": "TX", "addressCountry": "US" },
+  "sameAs": ["https://www.linkedin.com/in/cdavidmunoz", "https://www.instagram.com/davidselecto"],
+  "knowsAbout": ["Brand identity", "Print production", "Environmental design", "Wayfinding", "Illustration", "Large-format printing"]
+}
+</script>
+
 <style>
-/* ============================================================
-   TOKENS
-============================================================ */
+/* ── Design tokens (locked system) ─────────────────────────── */
 :root {
-  --ink:       #100F0D;
-  --ink-soft:  #1A1917;
-  --ink-mid:   #242220;
-  --bone:      #F5F1E8;
-  --bone-mid:  #EAE4D5;
-  --bone-dim:  #D5CFBF;
-  --amber:     #C8692A;
-  --amber-h:   #D97A3A;
-  --amber-pale:#3D2010;
-  --gray:      #7A7672;
-  --gray-lt:   #9A9590;
-  --rule:      1px solid #2E2D2B;
-  --rule-lt:   1px solid #D5CFBF;
-  --fd:        'Fraunces', Georgia, serif;
-  --fb:        'DM Sans', system-ui, sans-serif;
-  --fm:        'DM Mono', monospace;
-  --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ink: #100F0D;
+  --bone: #F5F1E8;
+  --amber: #C8692A;
+  --ink-60: rgba(16, 15, 13, .6);
+  --ink-15: rgba(16, 15, 13, .15);
+  --cyan: #00A6D6;
+  --magenta: #D6247A;
+  --yellow: #F2C200;
+
+  --f-display: "Fraunces", Georgia, serif;
+  --f-body: "DM Sans", system-ui, sans-serif;
+  --f-mono: "DM Mono", ui-monospace, monospace;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --ease: cubic-bezier(.2, .7, .1, 1);
 }
 
-/* ============================================================
-   RESET
-============================================================ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
 body {
-  font-family: var(--fb);
-  background: var(--ink);
-  color: var(--bone);
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  overscroll-behavior: none;
 }
-img, video { display: block; max-width: 100%; }
-button { font-family: var(--fb); cursor: pointer; border: none; background: none; }
+a { color: inherit; }
 ::selection { background: var(--amber); color: var(--bone); }
 
-/* ============================================================
-   ROUTER — SCREENS
-============================================================ */
-.screen { display: none; min-height: 100dvh; }
-.screen.active { display: block; }
-
-/* ============================================================
-   NAV
-============================================================ */
-.site-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 clamp(20px, 5vw, 48px);
-  height: 56px;
-  background: rgba(16,15,13,0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: var(--rule);
-}
-.nav-logo {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-style: italic;
-  font-size: 20px;
-  color: var(--bone);
-  cursor: pointer;
-  letter-spacing: -0.02em;
-  flex-shrink: 0;
-}
-.nav-logo span { color: var(--amber); }
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: clamp(16px, 3vw, 32px);
-}
-.nav-link {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--gray);
-  cursor: pointer;
-  padding: 4px 0;
-  border-bottom: 1px solid transparent;
-  transition: color .2s, border-color .2s;
-  white-space: nowrap;
-}
-.nav-link:hover, .nav-link.active {
-  color: var(--bone);
-  border-color: var(--amber);
+/* Paper grain */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 50;
+  opacity: .22; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .06 0 0 0 0 .06 0 0 0 0 .05 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Prototype badge */
-.proto-badge {
-  display: none;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--amber);
-  border: 1px solid var(--amber-pale);
-  background: var(--amber-pale);
-  padding: 3px 8px;
-  border-radius: 100px;
-}
-@media (min-width: 480px) { .proto-badge { display: block; } }
-
-/* ============================================================
-   PAGE WRAPPER (accounts for fixed nav)
-============================================================ */
-.page { padding-top: 56px; }
-
-/* ============================================================
-   HERO
-============================================================ */
-.hero {
+/* ── Sheet: the page is a press sheet with trim marks ─────── */
+.sheet {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--gutter) + 28px) var(--gutter);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: calc(100dvh - 56px);
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(32px, 6vh, 64px);
 }
-@media (max-width: 700px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-}
+.crop { position: absolute; width: 22px; height: 22px; pointer-events: none; }
+.crop::before, .crop::after { content: ""; position: absolute; background: var(--ink); }
+.crop::before { width: 22px; height: 1px; }
+.crop::after { width: 1px; height: 22px; }
+.crop.tl { top: 12px; left: 12px; }
+.crop.tr { top: 12px; right: 12px; transform: scaleX(-1); }
+.crop.bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+.crop.br { bottom: 12px; right: 12px; transform: scale(-1); }
 
-/* Left — Amber */
-.hero-l {
-  background: var(--amber);
-  padding: clamp(28px,5vw,56px) clamp(24px,5vw,52px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-  min-height: clamp(340px, 60vw, 100%);
+.reg {
+  position: absolute; width: 26px; height: 26px; color: var(--ink);
+  left: 50%; transform: translateX(-50%);
 }
-/* halftone */
-.hero-l::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(16,15,13,.1) 1px, transparent 1px);
-  background-size: 18px 18px;
-  pointer-events: none;
-}
-/* registration mark */
-.hero-l::after {
-  content: '';
-  position: absolute;
-  bottom: 28px; right: 28px;
-  width: 44px; height: 44px;
-  border: 1.5px solid rgba(16,15,13,.2);
-  border-radius: 50%;
-  pointer-events: none;
-}
+.reg.top { top: 6px; }
+.reg.bottom { bottom: 6px; }
 
-.hero-l-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  z-index: 1;
+/* ── Header strip: slug + colour bar ─────────────────────── */
+.slug {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px 24px;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-60);
 }
-.brand-shapes { display: flex; align-items: center; gap: 5px; }
-.brand-shapes svg { fill: rgba(16,15,13,.72); }
+.brand {
+  font-family: var(--f-display); font-size: 20px; letter-spacing: -.01em; text-transform: none;
+  color: var(--ink); text-decoration: none; font-weight: 600;
+  font-variation-settings: "opsz" 40, "SOFT" 50;
+}
+.brand span { color: var(--amber); }
+.colorbar { display: flex; height: 12px; border: 1px solid var(--ink); }
+.colorbar i { width: 18px; display: block; }
+.colorbar i + i { border-left: 1px solid var(--ink); }
 
-.hero-view-btn {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink);
-  border: 1px solid rgba(16,15,13,.3);
-  padding: 6px 14px;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: background .15s;
-  flex-shrink: 0;
+/* ── Hero ────────────────────────────────────────────────── */
+.hero { align-self: center; display: grid; gap: clamp(28px, 5vh, 48px); }
+.kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
 }
-.hero-view-btn:hover { background: rgba(16,15,13,.1); }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); position: relative; }
+.pulse::after {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid var(--amber); animation: ping 2.4s var(--ease) infinite;
+}
+@keyframes ping { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(2.2); opacity: 0; } }
 
-.hero-headline { position: relative; z-index: 1; }
-.h1-solid {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-size: clamp(64px, 14vw, 130px);
-  line-height: .86;
-  letter-spacing: -.03em;
-  color: var(--ink);
-  display: block;
-}
-.h1-rev {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-style: italic;
-  font-size: clamp(64px, 14vw, 130px);
-  line-height: .86;
-  letter-spacing: -.03em;
-  color: var(--bone);
-  display: block;
-}
-.hero-tagline {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-style: italic;
-  font-size: clamp(15px, 2.2vw, 22px);
-  color: var(--ink);
-  margin-top: clamp(16px, 3vw, 28px);
-  line-height: 1.35;
-  opacity: .88;
-}
-
-/* Right — Ink */
-.hero-r {
-  background: var(--ink);
-  padding: clamp(28px,5vw,56px) clamp(24px,5vw,52px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-left: var(--rule);
-  gap: 32px;
-}
-@media (max-width: 700px) {
-  .hero-r { border-left: none; border-top: var(--rule); }
-}
-
-.info-label {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin-bottom: 14px;
-}
-.avail-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.avail-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--fd);
-  font-weight: 300;
-  font-size: clamp(15px, 2vw, 19px);
-  color: var(--bone);
-}
-.dot {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  background: var(--amber);
-  flex-shrink: 0;
-}
-.dot.live { animation: pulse 1.8s ease-out infinite; }
-.dot.open { background: transparent; border: 1.5px solid var(--amber); }
-@keyframes pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(200,105,42,.65); }
-  70%  { box-shadow: 0 0 0 8px rgba(200,105,42,0); }
-  100% { box-shadow: 0 0 0 0 rgba(200,105,42,0); }
-}
-
-.contact-links { display: flex; flex-direction: column; gap: 8px; }
-.contact-link {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-size: clamp(14px, 1.8vw, 18px);
-  color: var(--bone);
-  cursor: pointer;
-  border-bottom: 1px solid transparent;
-  width: fit-content;
-  padding-bottom: 1px;
-  transition: color .15s, border-color .15s;
-}
-.contact-link:hover { color: var(--amber); border-color: var(--amber); }
-
-.hero-cta { border-top: var(--rule); padding-top: clamp(20px,3vw,28px); }
-
-/* ============================================================
-   BUTTONS
-============================================================ */
-.btn-bone {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--fb);
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--ink);
-  background: var(--bone);
-  padding: 13px 28px;
-  border-radius: 100px;
-  cursor: pointer;
-  border: none;
-  transition: background .15s, color .15s;
-  white-space: nowrap;
-}
-.btn-bone:hover { background: var(--amber); color: var(--bone); }
-
-.btn-amber {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--fb);
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--bone);
-  background: var(--amber);
-  padding: 13px 28px;
-  border-radius: 100px;
-  cursor: pointer;
-  border: none;
-  transition: background .15s;
-}
-.btn-amber:hover { background: var(--amber-h); }
-
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--fb);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--bone);
-  border: 1px solid #3A3835;
-  padding: 9px 18px;
-  border-radius: 100px;
-  cursor: pointer;
-  background: none;
-  transition: border-color .15s, color .15s;
-}
-.btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
-
-/* ============================================================
-   TICKER
-============================================================ */
-.ticker {
-  background: var(--bone);
-  border-top: var(--rule-lt);
-  border-bottom: var(--rule-lt);
-  overflow: hidden;
-  padding: 11px 0;
-}
-.ticker-inner {
-  display: flex;
-  width: max-content;
-  animation: ticker 22s linear infinite;
-}
-.ticker-inner:hover { animation-play-state: paused; }
-@keyframes ticker {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.ti { white-space: nowrap; font-family: var(--fd); font-weight: 700; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); padding: 0 24px; }
-.ts { color: var(--amber); }
-
-/* ============================================================
-   SECTION WORK (homepage)
-============================================================ */
-.sec-work {
-  background: var(--bone);
-  padding: clamp(32px,6vw,64px) clamp(20px,5vw,52px);
-}
-.sec-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  border-bottom: var(--rule-lt);
-  padding-bottom: 20px;
-  margin-bottom: clamp(28px,4vw,48px);
-}
-.sec-disp {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-size: clamp(36px, 8vw, 80px);
-  line-height: .88;
-  letter-spacing: -.03em;
-  color: var(--ink);
-}
-.sec-disp em { color: var(--amber); font-style: italic; }
-.sec-count { font-family: var(--fm); font-size: 12px; color: var(--gray); letter-spacing: .05em; padding-bottom: 6px; }
-
-/* Project grid */
-.proj-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-@media (max-width: 560px) {
-  .proj-grid { grid-template-columns: 1fr; }
-}
-
-.proj-card {
-  cursor: pointer;
-  border-right: var(--rule-lt);
-  border-bottom: var(--rule-lt);
-  background: var(--bone);
-  transition: background .2s;
-  position: relative;
-}
-.proj-card:nth-child(even) { border-right: none; }
-.proj-card:last-child:nth-child(odd) { border-right: none; }
-.proj-card:hover { background: var(--bone-mid); }
-
-.proj-media {
-  aspect-ratio: 4/3;
-  background: var(--ink-soft);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.proj-media-bg {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-style: italic;
-  font-size: clamp(20px, 4vw, 36px);
-  color: rgba(245,241,232,.1);
-  text-align: center;
-  padding: 16px;
-  line-height: 1.1;
-  pointer-events: none;
-  user-select: none;
-}
-.proj-num {
-  position: absolute;
-  top: 12px; left: 12px;
-  font-family: var(--fm);
-  font-size: 10px;
-  color: var(--bone);
-  background: rgba(16,15,13,.6);
-  padding: 2px 8px;
-  border-radius: 2px;
-  letter-spacing: .1em;
-  z-index: 2;
-}
-.proj-cta {
-  position: absolute;
-  bottom: 12px; right: 12px;
-  font-family: var(--fb);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--bone);
-  background: var(--amber);
-  padding: 4px 12px;
-  border-radius: 100px;
-  opacity: 0;
-  transform: translateY(5px);
-  transition: opacity .2s, transform .2s var(--ease);
-  z-index: 2;
-  pointer-events: none;
-}
-.proj-card:hover .proj-cta { opacity: 1; transform: translateY(0); }
-
-/* touch devices: always show cta */
-@media (hover: none) {
-  .proj-cta { opacity: 1; transform: translateY(0); }
-}
-
-.proj-info {
-  padding: clamp(16px,3vw,24px);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.proj-cat { font-size: 10px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--amber); }
-.proj-title { font-family: var(--fd); font-weight: 700; font-size: clamp(18px,3vw,26px); color: var(--ink); letter-spacing: -.02em; line-height: 1.1; }
-.proj-desc { font-size: 12px; color: var(--gray); line-height: 1.5; margin-top: 4px; }
-.proj-year { font-family: var(--fm); font-size: 11px; color: var(--gray-lt); margin-top: 6px; }
-
-/* ============================================================
-   ABOUT TEASER (homepage)
-============================================================ */
-.about-teaser {
-  background: var(--ink);
-  padding: clamp(40px,6vw,80px) clamp(20px,5vw,52px);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(24px,4vw,52px);
-  border-top: var(--rule);
-}
-@media (max-width: 600px) {
-  .about-teaser { grid-template-columns: 1fr; }
-}
-.at-hl {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-size: clamp(32px,6vw,64px);
-  line-height: .9;
-  letter-spacing: -.03em;
-  color: var(--bone);
-  align-self: end;
-}
-.at-hl em { color: var(--amber); font-style: italic; }
-.at-body { display: flex; flex-direction: column; gap: 24px; justify-content: space-between; }
-.at-copy {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-size: clamp(14px,1.8vw,17px);
-  color: var(--gray);
-  line-height: 1.75;
-}
-.at-copy strong { color: var(--bone); font-weight: 700; }
-.skill-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
-.stag {
-  font-size: 10px;
+/* Mis-registered headline that pulls into register on load */
+h1 {
+  margin: 0;
+  font-family: var(--f-display);
   font-weight: 400;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--gray);
-  border: 1px solid #2E2D2B;
-  padding: 4px 12px;
-  border-radius: 100px;
-  transition: color .15s, border-color .15s;
-  cursor: default;
+  font-size: clamp(44px, 10.5vw, 168px);
+  line-height: .92;
+  letter-spacing: -.035em;
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+  max-width: 12ch;
 }
-.stag:hover { color: var(--amber); border-color: var(--amber); }
-
-/* ============================================================
-   SITE FOOTER
-============================================================ */
-.site-footer {
-  background: var(--ink);
-  padding: clamp(20px,3vw,28px) clamp(20px,5vw,52px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: var(--rule);
-  flex-wrap: wrap;
-  gap: 12px;
+h1 em { font-style: italic; font-weight: 300; color: var(--amber); }
+.plate { position: relative; display: block; }
+.plate::before, .plate::after {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  mix-blend-mode: multiply; pointer-events: none;
+  animation: register 1.6s var(--ease) .25s both;
 }
-.foot-mark { font-family: var(--fd); font-weight: 900; font-style: italic; font-size: 18px; color: var(--bone); letter-spacing: -.02em; cursor: pointer; }
-.foot-mark span { color: var(--amber); }
-.foot-links { display: flex; gap: clamp(12px,2vw,24px); flex-wrap: wrap; }
-.foot-link { font-size: 10px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--gray); cursor: pointer; transition: color .15s; }
-.foot-link:hover { color: var(--amber); }
-.foot-copy { font-family: var(--fm); font-size: 11px; color: var(--gray); }
-
-/* ============================================================
-   CASE STUDY SCREEN
-============================================================ */
-#screen-case { background: var(--ink); }
-
-.case-hero {
-  background: var(--ink);
-  padding: clamp(28px,5vw,52px) clamp(20px,5vw,52px) clamp(24px,4vw,40px);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  border-bottom: var(--rule);
-  flex-wrap: wrap;
-}
-.case-meta { max-width: 580px; }
-.case-cat { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.case-title {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-size: clamp(28px, 5vw, 54px);
-  color: var(--bone);
-  letter-spacing: -.02em;
-  line-height: 1.0;
-  margin-bottom: 12px;
-}
-.case-desc {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-style: italic;
-  font-size: clamp(14px, 1.8vw, 18px);
-  color: var(--gray);
-  line-height: 1.55;
+.plate::before { color: var(--cyan); --dx: -9px; --dy: 3px; }
+.plate::after { color: var(--magenta); --dx: 8px; --dy: -4px; animation-delay: .35s; }
+@keyframes register {
+  0% { transform: translate(var(--dx), var(--dy)); opacity: .9; }
+  70% { opacity: .5; }
+  100% { transform: translate(0, 0); opacity: 0; }
 }
 
-/* Gallery */
-.case-gallery {
-  display: flex;
-  gap: clamp(14px,2vw,24px);
-  overflow-x: auto;
-  padding: clamp(24px,4vw,40px) clamp(20px,5vw,52px);
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+.lede {
+  max-width: 46ch; margin: 0;
+  font-size: clamp(17px, 1.6vw, 20px); line-height: 1.55;
 }
-.case-gallery::-webkit-scrollbar { display: none; }
-.case-slide {
-  flex-shrink: 0;
-  width: clamp(280px, 72vw, 820px);
-  aspect-ratio: 16/10;
-  background: var(--ink-mid);
-  border: var(--rule);
-  border-radius: 4px;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.lede strong { font-weight: 500; }
+
+/* ── Job ticket ──────────────────────────────────────────── */
+.row {
+  display: grid; gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: 1fr;
+  align-items: end;
+}
+@media (min-width: 900px) { .row { grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); } }
+
+.ticket {
+  border: 1px solid var(--ink);
+  background: var(--bone);
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em;
   position: relative;
-  overflow: hidden;
 }
-.slide-label {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-style: italic;
-  font-size: clamp(16px,2.5vw,28px);
-  color: rgba(245,241,232,.15);
-  text-align: center;
-  padding: 20px;
-  line-height: 1.2;
+.ticket header {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 10px 14px; background: var(--ink); color: var(--bone);
+  text-transform: uppercase; letter-spacing: .1em; font-size: 11px;
 }
-.slide-tag {
-  position: absolute;
-  top: 14px; left: 14px;
-  font-family: var(--fb);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--amber);
-  border: 1px solid #3A3835;
-  padding: 3px 10px;
-  border-radius: 100px;
+.ticket dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; }
+.ticket dt, .ticket dd { margin: 0; padding: 9px 14px; border-top: 1px solid var(--ink-15); }
+.ticket dt { color: var(--ink-60); text-transform: uppercase; font-size: 10.5px; letter-spacing: .1em; padding-right: 8px; }
+.ticket dd { text-align: right; }
+.ticket dl > :nth-child(1), .ticket dl > :nth-child(2) { border-top: 0; }
+.bar { height: 6px; margin-top: 6px; background: var(--ink-15); position: relative; overflow: hidden; }
+.bar::after {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 72%;
+  background: repeating-linear-gradient(90deg, var(--amber) 0 6px, transparent 6px 8px);
+  transform-origin: left; animation: fill 1.8s var(--ease) .6s both;
 }
-.gallery-hint {
-  text-align: center;
-  font-family: var(--fm);
-  font-size: 10px;
-  color: var(--gray);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  padding: 0 20px 16px;
+@keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.stamp {
+  position: absolute; right: 14px; bottom: -18px;
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--amber); border: 1.5px solid var(--amber); padding: 5px 9px;
+  transform: rotate(-6deg); background: var(--bone);
+  animation: stamp .5s cubic-bezier(.3, 1.6, .5, 1) 1.9s both;
+}
+@keyframes stamp { from { opacity: 0; transform: rotate(-6deg) scale(1.6); } to { opacity: 1; transform: rotate(-6deg) scale(1); } }
+
+/* ── CTAs ────────────────────────────────────────────────── */
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 48px; padding: 0 20px;
+  font-family: var(--f-mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+  text-decoration: none; border: 1px solid var(--ink);
+  transition: background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
+}
+.btn.primary { background: var(--ink); color: var(--bone); }
+.btn:hover { background: var(--amber); border-color: var(--amber); color: var(--bone); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible, .brand:focus-visible, .links a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+.btn svg { width: 14px; height: 14px; }
+
+/* ── Footer slug ─────────────────────────────────────────── */
+.foot {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px;
+  padding-top: 16px; border-top: 1px solid var(--ink);
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-60);
+}
+.links { display: flex; gap: 20px; }
+.links a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
+.links a:hover { border-color: var(--amber); color: var(--amber); }
+
+/* Halftone field, bottom-right */
+.halftone {
+  position: absolute; right: 0; bottom: 0; width: min(62vw, 720px); aspect-ratio: 1;
+  pointer-events: none; z-index: -1;
+  background: radial-gradient(circle, var(--amber) 38%, transparent 40%) 0 0 / 14px 14px;
+  -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 0%, rgba(0,0,0,.55) 35%, transparent 68%);
+          mask-image: radial-gradient(circle at 100% 100%, #000 0%, rgba(0,0,0,.55) 35%, transparent 68%);
+  opacity: .5;
 }
 
-/* 5 Acts strip */
-.acts-strip {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  border-top: var(--rule);
-}
+/* Load-in */
+.rise { animation: rise .9s var(--ease) both; }
+.d1 { animation-delay: .1s; } .d2 { animation-delay: .25s; } .d3 { animation-delay: .4s; } .d4 { animation-delay: .55s; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
 @media (max-width: 560px) {
-  .acts-strip { grid-template-columns: 1fr 1fr; }
-}
-.act {
-  padding: clamp(16px,2.5vw,24px) clamp(16px,2.5vw,28px);
-  border-right: var(--rule);
-}
-.act:last-child { border-right: none; }
-@media (max-width: 560px) {
-  .act:nth-child(even) { border-right: none; }
-  .act:nth-child(odd):not(:last-child) { border-right: var(--rule); }
-  .act { border-bottom: var(--rule); }
-}
-.act-num { font-family: var(--fm); font-size: 10px; color: var(--amber); margin-bottom: 6px; letter-spacing: .1em; }
-.act-title { font-family: var(--fd); font-weight: 700; font-size: clamp(12px,1.5vw,15px); color: var(--bone); margin-bottom: 5px; line-height: 1.2; }
-.act-body { font-size: 11px; color: var(--gray); line-height: 1.5; }
-
-/* ============================================================
-   WORK SCREEN
-============================================================ */
-#screen-work { background: var(--ink); }
-.work-header {
-  padding: clamp(32px,5vw,56px) clamp(20px,5vw,52px) clamp(24px,4vw,40px);
-  border-bottom: var(--rule);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.work-header-hl {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-size: clamp(36px,8vw,80px);
-  line-height: .88;
-  letter-spacing: -.03em;
-  color: var(--bone);
-}
-.work-header-hl em { color: var(--amber); font-style: italic; }
-.work-sub {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-style: italic;
-  font-size: clamp(13px,1.6vw,17px);
-  color: var(--gray);
-  max-width: 320px;
-  line-height: 1.5;
-  text-align: right;
+  .slug .meta-hide { display: none; }
+  .ticket dd { text-align: left; }
+  .ticket dl { grid-template-columns: 1fr; }
+  .ticket dt { padding-bottom: 0; border-top: 1px solid var(--ink-15); }
+  .ticket dd { padding-top: 2px; border-top: 0; }
+  .btn { flex: 1 1 100%; justify-content: center; }
+  .halftone { width: 90vw; opacity: .35; }
+  h1 { font-size: clamp(52px, 14vw, 72px); }
 }
 
-/* ============================================================
-   ABOUT SCREEN
-============================================================ */
-#screen-about { background: var(--ink); }
-.about-hero-sec {
-  background: var(--amber);
-  padding: clamp(36px,6vw,64px) clamp(20px,5vw,52px);
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: clamp(24px,4vw,52px);
-  align-items: center;
-  position: relative;
-  overflow: hidden;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .plate::before, .plate::after { display: none; }
 }
-.about-hero-sec::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle,rgba(16,15,13,.1) 1px, transparent 1px);
-  background-size: 18px 18px;
-  pointer-events: none;
-}
-@media (max-width: 560px) {
-  .about-hero-sec { grid-template-columns: 1fr; }
-}
-.about-photo {
-  width: clamp(120px,25vw,200px);
-  aspect-ratio: 1;
-  background: rgba(16,15,13,.18);
-  border-radius: 4px;
-  border: 1px solid rgba(16,15,13,.22);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-}
-.about-photo p {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-style: italic;
-  font-size: 12px;
-  color: rgba(16,15,13,.45);
-  text-align: center;
-  padding: 16px;
-  line-height: 1.4;
-}
-.about-intro { position: relative; z-index: 1; }
-.about-intro-hl {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-size: clamp(36px,7vw,72px);
-  line-height: .88;
-  letter-spacing: -.03em;
-  color: var(--ink);
-}
-.about-intro-hl em { color: var(--bone); font-style: italic; }
-.about-intro-sub {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-style: italic;
-  font-size: clamp(14px,1.8vw,18px);
-  color: var(--ink);
-  margin-top: 14px;
-  line-height: 1.45;
-  opacity: .8;
-}
-
-.about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-top: var(--rule);
-}
-@media (max-width: 600px) {
-  .about-content { grid-template-columns: 1fr; }
-}
-.about-col {
-  padding: clamp(28px,4vw,48px) clamp(20px,5vw,52px);
-  border-right: var(--rule);
-}
-.about-col:last-child { border-right: none; }
-.about-col-label { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); margin-bottom: 16px; }
-.about-copy-p {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-size: clamp(14px,1.6vw,16px);
-  color: var(--gray);
-  line-height: 1.8;
-}
-.about-copy-p strong { color: var(--bone); font-weight: 700; }
-.about-copy-p + .about-copy-p { margin-top: 18px; }
-
-.exp-list { display: flex; flex-direction: column; gap: clamp(16px,2vw,24px); }
-.exp-item { padding-left: 16px; border-left: 2px solid #2E2D2B; }
-.exp-year { font-family: var(--fm); font-size: 10px; color: var(--amber); margin-bottom: 4px; letter-spacing: .08em; }
-.exp-role { font-family: var(--fd); font-weight: 700; font-size: clamp(13px,1.6vw,16px); color: var(--bone); margin-bottom: 2px; }
-.exp-co { font-size: 12px; color: var(--gray); }
-
-.about-skills-sec {
-  padding: clamp(24px,4vw,40px) clamp(20px,5vw,52px);
-  border-top: var(--rule);
-}
-
-/* ============================================================
-   CONTACT SCREEN
-============================================================ */
-#screen-contact { background: var(--ink); }
-.contact-header {
-  padding: clamp(36px,6vw,64px) clamp(20px,5vw,52px) clamp(24px,4vw,40px);
-  border-bottom: var(--rule);
-}
-.contact-hl {
-  font-family: var(--fd);
-  font-weight: 900;
-  font-size: clamp(48px,10vw,96px);
-  line-height: .86;
-  letter-spacing: -.03em;
-  color: var(--bone);
-}
-.contact-hl em { color: var(--amber); font-style: italic; }
-.contact-sub {
-  font-family: var(--fd);
-  font-weight: 300;
-  font-style: italic;
-  font-size: clamp(14px,1.8vw,18px);
-  color: var(--gray);
-  margin-top: 16px;
-  line-height: 1.5;
-}
-
-.contact-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-@media (max-width: 620px) {
-  .contact-body { grid-template-columns: 1fr; }
-}
-.contact-form-col {
-  padding: clamp(28px,4vw,48px) clamp(20px,5vw,52px);
-  border-right: var(--rule);
-}
-@media (max-width: 620px) {
-  .contact-form-col { border-right: none; border-bottom: var(--rule); }
-}
-.contact-info-col {
-  padding: clamp(28px,4vw,48px) clamp(20px,5vw,52px);
-}
-
-.form-col-label { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); margin-bottom: 24px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
-.form-label { font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-lt); }
-.form-input {
-  background: var(--ink-mid);
-  border: 1px solid #2E2D2B;
-  color: var(--bone);
-  font-family: var(--fb);
-  font-size: 14px;
-  padding: 11px 14px;
-  border-radius: 6px;
-  outline: none;
-  width: 100%;
-  transition: border-color .15s;
-  appearance: none;
-}
-.form-input:focus { border-color: var(--amber); }
-.form-input::placeholder { color: var(--gray); }
-.form-textarea {
-  background: var(--ink-mid);
-  border: 1px solid #2E2D2B;
-  color: var(--bone);
-  font-family: var(--fb);
-  font-size: 14px;
-  padding: 11px 14px;
-  border-radius: 6px;
-  outline: none;
-  width: 100%;
-  resize: vertical;
-  min-height: 110px;
-  transition: border-color .15s;
-  appearance: none;
-}
-.form-textarea:focus { border-color: var(--amber); }
-.form-textarea::placeholder { color: var(--gray); }
-
-.ci-block { margin-bottom: 28px; }
-.ci-label { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.ci-val { font-family: var(--fd); font-weight: 300; font-size: clamp(15px,2vw,18px); color: var(--bone); }
-.ci-val small { display: block; font-size: 12px; color: var(--gray); margin-top: 3px; }
-.ci-link { font-family: var(--fd); font-weight: 300; font-size: clamp(15px,2vw,18px); color: var(--bone); cursor: pointer; border-bottom: 1px solid transparent; display: inline-block; padding-bottom: 1px; transition: color .15s, border-color .15s; }
-.ci-link:hover { color: var(--amber); border-color: var(--amber); }
-
-/* ============================================================
-   SCROLL RESTORE / REVEAL
-============================================================ */
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity .8s var(--ease), transform .8s var(--ease);
-}
-.fade-up.in { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="site-nav">
-  <div class="nav-logo" onclick="go('home')">by<span>munoz</span></div>
-  <div class="nav-links">
-    <span class="proto-badge">Prototype</span>
-    <span class="nav-link" data-p="home"  onclick="go('home')">Home</span>
-    <span class="nav-link" data-p="work"  onclick="go('work')">Work</span>
-    <span class="nav-link" data-p="about" onclick="go('about')">About</span>
-    <span class="nav-link" data-p="contact" onclick="go('contact')">Contact</span>
-  </div>
-</nav>
+<main class="sheet">
+  <span class="crop tl" aria-hidden="true"></span>
+  <span class="crop tr" aria-hidden="true"></span>
+  <span class="crop bl" aria-hidden="true"></span>
+  <span class="crop br" aria-hidden="true"></span>
+  <svg class="reg top" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="6" fill="none" stroke="currentColor"/><path d="M13 0v26M0 13h26" stroke="currentColor"/></svg>
+  <svg class="reg bottom" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="6" fill="none" stroke="currentColor"/><path d="M13 0v26M0 13h26" stroke="currentColor"/></svg>
+  <div class="halftone" aria-hidden="true"></div>
 
-<!-- ================================================================
-     HOME
-================================================================ -->
-<div class="screen active page" id="screen-home">
+  <header class="slug rise">
+    <a class="brand" href="/">By<span>·</span>Munoz</a>
+    <span class="meta-hide">bymunoz.com — Proof 01 — Austin, TX</span>
+    <span class="colorbar" aria-hidden="true">
+      <i style="background:var(--cyan)"></i><i style="background:var(--magenta)"></i><i style="background:var(--yellow)"></i><i style="background:var(--ink)"></i><i style="background:var(--amber)"></i><i style="background:var(--bone)"></i>
+    </span>
+  </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-l">
-      <div class="hero-l-top">
-        <div class="brand-shapes" aria-hidden="true">
-          <svg width="11" height="11" viewBox="0 0 11 11"><rect width="11" height="11"/></svg>
-          <svg width="11" height="11" viewBox="0 0 11 11"><polygon points="5.5,0 11,11 0,11"/></svg>
-          <svg width="11" height="11" viewBox="0 0 11 11"><circle cx="5.5" cy="5.5" r="5.5"/></svg>
-        </div>
-        <button class="hero-view-btn" onclick="go('work')">Selected Works ↓</button>
-      </div>
-      <div class="hero-headline">
-        <span class="h1-solid">DAVID</span>
-        <span class="h1-rev">MUNOZ</span>
-        <p class="hero-tagline">Design as a vessel<br>for human connection.</p>
-      </div>
-    </div>
+  <section class="hero" aria-labelledby="title">
+    <p class="kicker rise d1"><span class="pulse" aria-hidden="true"></span> Portfolio on press</p>
 
-    <div class="hero-r">
-      <div></div>
-      <div style="display:flex;flex-direction:column;gap:32px">
-        <div>
-          <p class="info-label">Availability</p>
-          <ul class="avail-list">
-            <li class="avail-item"><span class="dot live"></span>On-site · Austin, Texas</li>
-            <li class="avail-item"><span class="dot open"></span>Remote · CST &amp; EST</li>
-          </ul>
-        </div>
-        <div>
-          <p class="info-label">Contact &amp; Connect</p>
-          <div class="contact-links">
-            <span class="contact-link" onclick="go('contact')">davidselecto@gmail.com</span>
-            <span class="contact-link">LinkedIn ↗</span>
-          </div>
+    <h1 id="title" class="rise d2">
+      <span class="plate" data-text="Design is what">Design is what</span>
+      <span class="plate" data-text="keeps us human.">keeps us <em>human.</em></span>
+    </h1>
+
+    <div class="row">
+      <div class="rise d3" style="display:grid; gap:28px;">
+        <p class="lede">
+          I’m <strong>David Munoz</strong>, a graphic designer in Austin, TX. I work in brand identity, print production, environmental design and illustration, from the first sketch to the finished piece on the substrate. The new portfolio is being made ready now.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:davidselecto@gmail.com?subject=Hello%20from%20bymunoz.com">
+            Email me
+            <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 12 12 2M5 2h7v7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          </a>
+          <a class="btn" href="mailto:davidselecto@gmail.com?subject=Resume%20%26%20work%20samples%20request">Request resume &amp; samples</a>
         </div>
       </div>
-      <div class="hero-cta">
-        <button class="btn-bone">Request Resume &rarr;</button>
-      </div>
+
+      <aside class="ticket rise d4" aria-label="Job ticket">
+        <header><span>Job ticket</span><span>No. BM-2026-01</span></header>
+        <dl>
+          <dt>Client</dt><dd>bymunoz.com</dd>
+          <dt>Disciplines</dt><dd>Brand · Print · Environmental · Illustration</dd>
+          <dt>Experience</dt><dd>12+ years</dd>
+          <dt>Location</dt><dd>Austin, TX — on-site · hybrid · remote</dd>
+          <dt>Availability</dt><dd>Open to full-time roles</dd>
+          <dt>Status</dt><dd>Make-ready<div class="bar" aria-hidden="true"></div></dd>
+        </dl>
+        <span class="stamp" aria-hidden="true">Launching soon</span>
+      </aside>
     </div>
   </section>
 
-  <!-- TICKER -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-inner">
-      <span class="ti">Brand Identity <span class="ts">◆</span></span>
-      <span class="ti">Print Production <span class="ts">◆</span></span>
-      <span class="ti">Illustration <span class="ts">◆</span></span>
-      <span class="ti">Creative Direction <span class="ts">◆</span></span>
-      <span class="ti">Wayfinding Systems <span class="ts">◆</span></span>
-      <span class="ti">Label Design <span class="ts">◆</span></span>
-      <span class="ti">Environmental Graphics <span class="ts">◆</span></span>
-      <span class="ti">Austin TX <span class="ts">◆</span></span>
-      <span class="ti">Brand Identity <span class="ts">◆</span></span>
-      <span class="ti">Print Production <span class="ts">◆</span></span>
-      <span class="ti">Illustration <span class="ts">◆</span></span>
-      <span class="ti">Creative Direction <span class="ts">◆</span></span>
-      <span class="ti">Wayfinding Systems <span class="ts">◆</span></span>
-      <span class="ti">Label Design <span class="ts">◆</span></span>
-      <span class="ti">Environmental Graphics <span class="ts">◆</span></span>
-      <span class="ti">Austin TX <span class="ts">◆</span></span>
-    </div>
-  </div>
-
-  <!-- WORK GRID -->
-  <section class="sec-work">
-    <div class="sec-head">
-      <h2 class="sec-disp">SELECTED<br><em>WORKS</em></h2>
-      <span class="sec-count">003</span>
-    </div>
-    <div class="proj-grid" id="home-grid"></div>
-  </section>
-
-  <!-- ABOUT TEASER -->
-  <section class="about-teaser">
-    <div>
-      <h2 class="at-hl">15+ Years<br>of <em>Craft.</em></h2>
-    </div>
-    <div class="at-body">
-      <p class="at-copy">Based in <strong>Austin, TX.</strong> Graphic designer specializing in branding, print, and illustration — with the range to take a project from napkin sketch to production-ready files.<br><br>Design isn't decoration. It's the decision-making layer between a business and the people it serves. That's the work.</p>
-      <div class="skill-cloud">
-        <span class="stag">Brand Identity</span><span class="stag">Print Production</span><span class="stag">Illustration</span><span class="stag">Creative Direction</span><span class="stag">Label Design</span><span class="stag">Environmental</span><span class="stag">Adobe Suite</span><span class="stag">Motion</span>
-      </div>
-      <div><button class="btn-bone" onclick="go('about')">Full Story &rarr;</button></div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="foot-mark" onclick="go('home')">by<span>munoz</span></div>
-    <div class="foot-links">
-      <span class="foot-link" onclick="go('work')">Work</span>
-      <span class="foot-link" onclick="go('about')">About</span>
-      <span class="foot-link" onclick="go('contact')">Contact</span>
-      <span class="foot-link">LinkedIn ↗</span>
-    </div>
-    <span class="foot-copy">© 2026 David Munoz. Austin, TX.</span>
+  <footer class="foot rise d4">
+    <span>© <span id="yr">2026</span> David Munoz</span>
+    <nav class="links" aria-label="Social">
+      <a href="https://www.linkedin.com/in/cdavidmunoz" rel="me noopener" target="_blank">LinkedIn</a>
+      <a href="https://www.instagram.com/davidselecto" rel="me noopener" target="_blank">Instagram</a>
+      <a href="mailto:davidselecto@gmail.com">davidselecto@gmail.com</a>
+    </nav>
   </footer>
-</div>
+</main>
 
-<!-- ================================================================
-     WORK
-================================================================ -->
-<div class="screen page" id="screen-work">
-  <div class="work-header">
-    <h2 class="work-header-hl">ALL<br><em>PROJECTS</em></h2>
-    <p class="work-sub">Three case studies.<br>Branding, print, and wayfinding.</p>
-  </div>
-  <div class="proj-grid" id="work-grid" style="background:var(--bone)"></div>
-  <footer class="site-footer">
-    <div class="foot-mark" onclick="go('home')">by<span>munoz</span></div>
-    <span class="foot-copy">More work available on request.</span>
-  </footer>
-</div>
-
-<!-- ================================================================
-     CASE STUDY
-================================================================ -->
-<div class="screen page" id="screen-case">
-  <div class="case-hero">
-    <div class="case-meta">
-      <p class="case-cat" id="cs-cat"></p>
-      <h2 class="case-title" id="cs-title"></h2>
-      <p class="case-desc" id="cs-desc"></p>
-    </div>
-    <button class="btn-ghost" onclick="go('work')">&larr; Back to Work</button>
-  </div>
-  <div class="case-gallery" id="cs-gallery"></div>
-  <p class="gallery-hint">← Swipe to explore the process →</p>
-  <div class="acts-strip">
-    <div class="act"><p class="act-num">ACT 01</p><p class="act-title">The Brief</p><p class="act-body">Who is the client and the real problem behind the ask.</p></div>
-    <div class="act"><p class="act-num">ACT 02</p><p class="act-title">Research</p><p class="act-body">Audience, competitive landscape, and the thinking before the making.</p></div>
-    <div class="act"><p class="act-num">ACT 03</p><p class="act-title">Process</p><p class="act-body">Sketches, iterations, and decisions — showing the work, not just the finish.</p></div>
-    <div class="act"><p class="act-num">ACT 04</p><p class="act-title">Solution</p><p class="act-body">Final deliverables in real-world context — installed, on-shelf, live.</p></div>
-    <div class="act"><p class="act-num">ACT 05</p><p class="act-title">Result</p><p class="act-body">Outcome for the client. What changed as a result of the work.</p></div>
-  </div>
-  <footer class="site-footer">
-    <div class="foot-mark" onclick="go('home')">by<span>munoz</span></div>
-    <button class="btn-ghost" onclick="go('work')">&larr; All Projects</button>
-  </footer>
-</div>
-
-<!-- ================================================================
-     ABOUT
-================================================================ -->
-<div class="screen page" id="screen-about">
-  <div class="about-hero-sec">
-    <div class="about-photo"><p>Profile photo<br>800×800 WebP</p></div>
-    <div class="about-intro">
-      <h2 class="about-intro-hl">David<br><em>Munoz.</em></h2>
-      <p class="about-intro-sub">Graphic designer &amp; visual artist<br>based in Austin, Texas.</p>
-      <button class="btn-bone" style="margin-top:24px;font-size:13px;padding:10px 24px" onclick="go('contact')">Get in Touch &rarr;</button>
-    </div>
-  </div>
-
-  <div class="about-content">
-    <div class="about-col">
-      <p class="about-col-label">About</p>
-      <p class="about-copy-p">I'm a graphic designer with <strong>15+ years of practice</strong> across branding, print production, illustration, and creative direction. I've worked with global brands and scrappy local businesses — the common thread is solving real problems with considered design.</p>
-      <p class="about-copy-p">Based in Austin but open to remote work in CST and EST time zones. I use AI as a creative accelerant — not a replacement for design thinking — and I'm transparent about that.</p>
-    </div>
-    <div class="about-col">
-      <p class="about-col-label">Experience</p>
-      <div class="exp-list">
-        <div class="exp-item"><p class="exp-year">2026</p><p class="exp-role">Lead Designer</p><p class="exp-co">SXSW · Wayfinding &amp; Event Design</p></div>
-        <div class="exp-item"><p class="exp-year">2025</p><p class="exp-role">Lead Designer</p><p class="exp-co">Geeks5g</p></div>
-        <div class="exp-item"><p class="exp-year">2023</p><p class="exp-role">Brand Designer</p><p class="exp-co">Austin Sign Co. · Full Rebrand</p></div>
-        <div class="exp-item"><p class="exp-year">2019–2026</p><p class="exp-role">Brand &amp; Label Designer</p><p class="exp-co">Flawless Vape Co.</p></div>
-        <div class="exp-item"><p class="exp-year">2012–present</p><p class="exp-role">Freelance Creative Director</p><p class="exp-co">Various Austin &amp; Remote Clients</p></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="about-skills-sec">
-    <p class="about-col-label" style="margin-bottom:14px">Skills</p>
-    <div class="skill-cloud">
-      <span class="stag">Brand Identity</span><span class="stag">Visual Systems</span><span class="stag">Typography</span><span class="stag">Logo Design</span><span class="stag">Print Production</span><span class="stag">Illustration</span><span class="stag">Packaging</span><span class="stag">Label Design</span><span class="stag">Wayfinding</span><span class="stag">Environmental Graphics</span><span class="stag">Social Media Design</span><span class="stag">Art Direction</span><span class="stag">Adobe Illustrator</span><span class="stag">Adobe InDesign</span><span class="stag">Photoshop</span><span class="stag">After Effects</span>
-    </div>
-  </div>
-
-  <footer class="site-footer">
-    <div class="foot-mark" onclick="go('home')">by<span>munoz</span></div>
-    <div class="foot-links">
-      <span class="foot-link" onclick="go('work')">Work</span>
-      <span class="foot-link" onclick="go('contact')">Contact</span>
-    </div>
-    <span class="foot-copy">© 2026 David Munoz.</span>
-  </footer>
-</div>
-
-<!-- ================================================================
-     CONTACT
-================================================================ -->
-<div class="screen page" id="screen-contact">
-  <div class="contact-header">
-    <h2 class="contact-hl">Let's<br><em>Work.</em></h2>
-    <p class="contact-sub">Open to freelance projects, full-time roles,<br>and everything in between.</p>
-  </div>
-
-  <div class="contact-body">
-    <div class="contact-form-col">
-      <p class="form-col-label">Send a message</p>
-      <div class="form-group">
-        <label class="form-label">Name</label>
-        <input class="form-input" type="text" placeholder="Your name" autocomplete="name">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" placeholder="your@email.com" autocomplete="email">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Project type</label>
-        <input class="form-input" type="text" placeholder="Brand identity, print, illustration…">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Message</label>
-        <textarea class="form-textarea" placeholder="Tell me about your project…"></textarea>
-      </div>
-      <button class="btn-amber" style="margin-top:8px">Send Message &rarr;</button>
-    </div>
-
-    <div class="contact-info-col">
-      <div class="ci-block">
-        <p class="ci-label">Email</p>
-        <span class="ci-link">davidselecto@gmail.com</span>
-      </div>
-      <div class="ci-block">
-        <p class="ci-label">LinkedIn</p>
-        <span class="ci-link">linkedin.com/in/cdavidmunoz ↗</span>
-      </div>
-      <div class="ci-block">
-        <p class="ci-label">Location</p>
-        <p class="ci-val">Austin, Texas<small>Available on-site &amp; remote</small></p>
-      </div>
-      <div class="ci-block">
-        <p class="ci-label">Response time</p>
-        <p class="ci-val">Within 24 hours</p>
-      </div>
-    </div>
-  </div>
-
-  <footer class="site-footer">
-    <div class="foot-mark" onclick="go('home')">by<span>munoz</span></div>
-    <span class="foot-copy">© 2026 David Munoz. Austin, TX.</span>
-  </footer>
-</div>
-
-<!-- ================================================================
-     SCRIPTS
-================================================================ -->
 <script>
-const PROJECTS = [
-  {
-    id:'01', client:'SXSW 2026',
-    cat:'Wayfinding & Event Design', year:'2026',
-    desc:'Multi-channel asset production and wayfinding systems for 50,000+ attendees across a multi-site festival — executed under strict brand guidelines.',
-    slides:[
-      {label:'Hero / Cover Image',       tag:'Act 01 — Brief'},
-      {label:'Wayfinding System Diagram',tag:'Act 02 — Research'},
-      {label:'Sketches & Concepts',      tag:'Act 03 — Process'},
-      {label:'Email Banner Suite (×3)',   tag:'Act 04 — Execution'},
-      {label:'Signage Installations',    tag:'Act 04 — Execution'},
-      {label:'Mobile App UI',            tag:'Act 04 — Digital Extension'},
-      {label:'Installation Grid & Impact',tag:'Act 05 — Result'},
-    ]
-  },
-  {
-    id:'02', client:'Flawless Vape Co.',
-    cat:'Brand Identity & Label Design', year:'2019–2026',
-    desc:'Complete brand build from identity through label design, then navigating an FDA regulatory overhaul mid-project without losing shelf presence.',
-    slides:[
-      {label:'Brand Hero',               tag:'Act 01 — Brief'},
-      {label:'Logo Exploration',         tag:'Act 03 — Process'},
-      {label:'Color & Typography System',tag:'Act 03 — Process'},
-      {label:'Label Suite — Original',   tag:'Act 04 — Execution'},
-      {label:'FDA Compliance Redesign',  tag:'Act 04 — Solution'},
-      {label:'Shelf Presence',           tag:'Act 05 — Result'},
-      {label:'2026 Digital Extension',   tag:'Act 04 — New Work'},
-    ]
-  },
-  {
-    id:'03', client:'Austin Sign Co.',
-    cat:'Rebrand & Environmental Design', year:'2023',
-    desc:'Identity through storefront installation, vehicle wraps, and digital presence for a 15-year-old Austin sign shop competing in a modernizing market.',
-    slides:[
-      {label:'Before / After Storefront',tag:'Act 01 — Brief'},
-      {label:'Logo System',              tag:'Act 03 — Process'},
-      {label:'Storefront — Installed',   tag:'Act 04 — Execution'},
-      {label:'35ft Interior Mural',      tag:'Act 04 — Execution'},
-      {label:'Vehicle Wraps',            tag:'Act 04 — Execution'},
-      {label:'2026 Digital Extension',   tag:'Act 04 — New Work'},
-      {label:'Timeline & Impact',        tag:'Act 05 — Result'},
-    ]
-  }
-];
-
-function makeCard(p) {
-  const el = document.createElement('article');
-  el.className = 'proj-card';
-  el.setAttribute('role','button');
-  el.setAttribute('tabindex','0');
-  el.setAttribute('aria-label', 'View case study: ' + p.client);
-  el.innerHTML = `
-    <div class="proj-media">
-      <p class="proj-media-bg">${p.client}</p>
-      <span class="proj-num">${p.id}</span>
-      <span class="proj-cta">View Case Study</span>
-    </div>
-    <div class="proj-info">
-      <p class="proj-cat">${p.cat}</p>
-      <h3 class="proj-title">${p.client}</h3>
-      <p class="proj-desc">${p.desc}</p>
-      <p class="proj-year">${p.year}</p>
-    </div>`;
-  const open = () => openCase(p);
-  el.addEventListener('click', open);
-  el.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();open();} });
-  return el;
-}
-
-function openCase(p) {
-  document.getElementById('cs-cat').textContent   = p.cat;
-  document.getElementById('cs-title').textContent = p.client;
-  document.getElementById('cs-desc').textContent  = p.desc;
-  const g = document.getElementById('cs-gallery');
-  g.innerHTML = '';
-  p.slides.forEach(s => {
-    const d = document.createElement('div');
-    d.className = 'case-slide';
-    d.innerHTML = `<p class="slide-label">${s.label}</p><span class="slide-tag">${s.tag}</span>`;
-    g.appendChild(d);
-  });
-  go('case');
-  window.scrollTo(0,0);
-}
-
-function go(page) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const el = document.getElementById('screen-' + page);
-  if (el) { el.classList.add('active'); window.scrollTo(0,0); }
-  document.querySelectorAll('.nav-link').forEach(l => {
-    l.classList.toggle('active', l.getAttribute('data-p') === page);
-  });
-}
-
-function init() {
-  const hg = document.getElementById('home-grid');
-  const wg = document.getElementById('work-grid');
-  PROJECTS.forEach(p => {
-    hg.appendChild(makeCard(p));
-    wg.appendChild(makeCard(p));
-  });
-}
-
-init();
+  document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
