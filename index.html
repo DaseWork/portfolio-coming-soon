@@ -14,7 +14,9 @@
 <meta property="og:description" content="Brand identity, print production, environmental design and illustration. New portfolio on press.">
 <meta name="twitter:card" content="summary">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23100F0D'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23C8692A' stroke-width='2'/%3E%3Cpath d='M16 4v24M4 16h24' stroke='%23C8692A' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23100F0D'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23C8692A' stroke-width='2'/%3E%3Cpath d='M16 4v24M4 16h24' stroke='%23C8692A' stroke-width='2'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,6 +42,7 @@
   --ink: #100F0D;
   --bone: #F5F1E8;
   --amber: #C8692A;
+  --amber-text: #A8521C; /* amber for small text: 4.5:1+ on bone */
   --ink-60: rgba(16, 15, 13, .6);
   --ink-15: rgba(16, 15, 13, .15);
   --cyan: #00A6D6;
@@ -151,6 +154,7 @@ h1 em { font-style: italic; font-weight: 300; color: var(--amber); }
 .plate { position: relative; display: block; }
 .plate::before, .plate::after {
   content: attr(data-text);
+  content: attr(data-text) / ""; /* decorative: keep duplicates out of the accessibility tree */
   position: absolute; inset: 0;
   mix-blend-mode: multiply; pointer-events: none;
   animation: register 1.6s var(--ease) .25s both;
@@ -204,7 +208,7 @@ h1 em { font-style: italic; font-weight: 300; color: var(--amber); }
 .stamp {
   position: absolute; right: 14px; bottom: -18px;
   font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--amber); border: 1.5px solid var(--amber); padding: 5px 9px;
+  color: var(--amber-text); border: 1.5px solid var(--amber-text); padding: 5px 9px;
   transform: rotate(-6deg); background: var(--bone);
   animation: stamp .5s cubic-bezier(.3, 1.6, .5, 1) 1.9s both;
 }
@@ -220,7 +224,7 @@ h1 em { font-style: italic; font-weight: 300; color: var(--amber); }
   transition: background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
 }
 .btn.primary { background: var(--ink); color: var(--bone); }
-.btn:hover { background: var(--amber); border-color: var(--amber); color: var(--bone); }
+.btn:hover { background: var(--amber-text); border-color: var(--amber-text); color: var(--bone); }
 .btn:active { transform: translateY(1px); }
 .btn:focus-visible, .brand:focus-visible, .links a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
 .btn svg { width: 14px; height: 14px; }
@@ -231,9 +235,9 @@ h1 em { font-style: italic; font-weight: 300; color: var(--amber); }
   padding-top: 16px; border-top: 1px solid var(--ink);
   font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-60);
 }
-.links { display: flex; gap: 20px; }
-.links a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
-.links a:hover { border-color: var(--amber); color: var(--amber); }
+.links { display: flex; flex-wrap: wrap; gap: 0 20px; }
+.links a { display: inline-block; padding: 6px 0; color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
+.links a:hover { border-color: var(--amber-text); color: var(--amber-text); }
 
 /* Halftone field, bottom-right */
 .halftone {
