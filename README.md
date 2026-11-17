@@ -9,6 +9,7 @@ Coming-soon page for [bymunoz.com](https://bymunoz.com/), deployed on Vercel as 
 | `vercel.json` | Clean URLs and security headers |
 | `robots.txt`, `sitemap.xml` | Search-engine files |
 | `favicon.ico`, `apple-touch-icon.png` | Icons for crawlers and iOS home screens |
+| `og-image.png` | Link-preview image (1200×630) shown when the site is shared |
 
 ## Editing the inline script
 
